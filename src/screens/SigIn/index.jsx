@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Input, Button, Text } from "@rneui/themed";
 import { View, StyleSheet, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import login from "../../services/api";
+import createJwt, {useAuth} from "../../services/api";
 
 const SigIn = () => {
 	const [registerNumber, setRegisterNumber] = useState("");
@@ -22,9 +22,11 @@ const SigIn = () => {
 		navigation.navigate("Home")
 	}
 
+	const { login } = useAuth();
+
 	const handleLoginFunction = async () => {
-		const response = await login(registerNumber, password);
-		if (response.status === 200) {
+		const response = await createJwt(registerNumber, password, login);
+		if (response === 200) {
 			handleNavHome()
 		}
 	};
