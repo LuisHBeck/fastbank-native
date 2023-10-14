@@ -29,6 +29,20 @@ export const axiosInstance = axios.create({
 	baseURL: "http://192.168.15.5:8056/api/v1/",
 });
 
+export async function createUser(registerNumber, picture, password) {
+	try {
+		const response = await axiosInstance.post("auth/users/", {
+			register_number: registerNumber,
+			picture: picture,
+			password: password,
+		});
+		console.log(response);
+		return response.status;
+	} catch (err) {
+		console.log("error on createUser", err);
+	}
+}
+
 export default async function createJwt(
 	registerNumber,
 	password,
@@ -42,8 +56,43 @@ export default async function createJwt(
 
 		setAuthToken(response.data.access);
 
-		return response.status;
+		return {
+			status: response.status,
+			jwt: response.data.access,
+		};
 	} catch (err) {
-		console.log(err);
+		console.log("error on createJwt", err);
+	}
+}
+
+export async function naturalRegister(
+	registerNumber,
+	name,
+	birthDate,
+	rg,
+	socialName,
+	jwt
+) {
+	try {
+		const response = await axiosInstance.post(
+			"natural-people/",
+			{
+				user: registerNumber,
+				name: name,
+				birth_date: birthDate,
+				cpf: registerNumber,
+				rg: rg,
+				social_name: socialName,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}
+		);
+		console.log(response);
+		return response;
+	} catch (err) {
+		console.log("error on naturalRegister", err);
 	}
 }

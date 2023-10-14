@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import { Input, Button, Text } from "@rneui/themed";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import createJwt, {useAuth} from "../../services/api";
+import createJwt, { useAuth } from "../../services/api";
+
+const showAlert = () =>
+	Alert.alert("Login failed", "Wrong username or password", [
+		{
+			text: "Ok",
+			onPress: () => {},
+			style: "cancel",
+		},
+	]);
 
 const SigIn = () => {
 	const [registerNumber, setRegisterNumber] = useState("");
 	const [password, setPassword] = useState("");
 
 	const handleInputChange = (value, setStateFunction) => {
-    setStateFunction(value);
-  };
+		setStateFunction(value);
+	};
 
 	const navigation = useNavigation();
 
@@ -19,16 +28,14 @@ const SigIn = () => {
 	};
 
 	const handleNavHome = () => {
-		navigation.navigate("Home")
-	}
+		navigation.navigate("Home");
+	};
 
 	const { login } = useAuth();
 
 	const handleLoginFunction = async () => {
 		const response = await createJwt(registerNumber, password, login);
-		if (response === 200) {
-			handleNavHome()
-		}
+		response.status === 200 ? handleNavHome() : showAlert();
 	};
 
 	return (
@@ -41,7 +48,7 @@ const SigIn = () => {
 				containerStyle={{ width: "85%", marginTop: 90 }}
 				style={{ color: "white" }}
 				placeholder="CPF / CNPJ"
-        keyboardType="number-pad"
+				keyboardType="number-pad"
 				onChangeText={(text) => handleInputChange(text, setRegisterNumber)}
 			/>
 			<Input

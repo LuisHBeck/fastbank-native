@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import React, { useState } from "react";
 import { Container, RowContainer, DefaultText } from "./styled";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../../services/api";
 
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
@@ -15,7 +16,10 @@ const MoneyBalance = () => {
 
 	const navigation = useNavigation();
 
+	const { logout } = useAuth();
+
 	const handleNavLogin = () => {
+		logout();
 		navigation.navigate("SigIn");
 	};
 
