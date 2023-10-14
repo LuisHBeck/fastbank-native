@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input, Button, Text } from "@rneui/themed";
 import { View, StyleSheet, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import login from "../../services/api";
 
 const SigIn = () => {
+	const [registerNumber, setRegisterNumber] = useState("");
+	const [password, setPassword] = useState("");
+
+	const handleInputChange = (value, setStateFunction) => {
+    setStateFunction(value);
+  };
+
 	const navigation = useNavigation();
 
 	const handleNavRegister = () => {
 		navigation.navigate("Register");
+	};
+
+	const handleNavHome = () => {
+		navigation.navigate("Home")
+	}
+
+	const handleLoginFunction = async () => {
+		const response = await login(registerNumber, password);
+		if (response.status === 200) {
+			handleNavHome()
+		}
 	};
 
 	return (
@@ -21,12 +40,14 @@ const SigIn = () => {
 				style={{ color: "white" }}
 				placeholder="CPF / CNPJ"
         keyboardType="number-pad"
+				onChangeText={(text) => handleInputChange(text, setRegisterNumber)}
 			/>
 			<Input
 				containerStyle={{ width: "85%" }}
 				style={{ color: "white" }}
 				placeholder="PASSWORD"
 				secureTextEntry={true}
+				onChangeText={(text) => handleInputChange(text, setPassword)}
 			/>
 			<Button
 				containerStyle={{ width: 180, marginTop: 70 }}
@@ -34,6 +55,7 @@ const SigIn = () => {
 				titleStyle={{ color: "white" }}
 				title="LOGIN"
 				type="Outline"
+				onPress={() => handleLoginFunction()}
 			/>
 			<Text
 				onPress={() => handleNavRegister()}

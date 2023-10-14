@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import React, { useState } from "react";
 import { Container, RowContainer, DefaultText } from "./styled";
+import { useNavigation } from "@react-navigation/native";
 
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
@@ -10,6 +11,12 @@ const MoneyBalance = () => {
 
 	const handleToggleBalanceVisibility = () => {
 		setBalanceVisibility(!balanceVisibility);
+	};
+
+	const navigation = useNavigation();
+
+	const handleNavLogin = () => {
+		navigation.navigate("SigIn");
 	};
 
 	return (
@@ -26,8 +33,9 @@ const MoneyBalance = () => {
 							style={{ marginLeft: 10 }}
 							onPress={handleToggleBalanceVisibility}
 						/>
-					</RowContainer>) : (
-          <>
+					</RowContainer>
+				) : (
+					<>
 						<RowContainer>
 							<DefaultText>R${accountBalance} </DefaultText>
 							<Ionicons
@@ -41,17 +49,17 @@ const MoneyBalance = () => {
 					</>
 				)}
 			</View>
-        <RowContainer>
-          <DefaultText>See details</DefaultText>
-          <MaterialIcons
-            name="keyboard-arrow-right"
-            size={22}
-            color="#e53d41"
-            style={{ marginLeft: 5 }}
-            onPress={() => {}}
-          />
-        </RowContainer>
-  	</Container>  
+			<RowContainer>
+				<DefaultText>See details</DefaultText>
+				<MaterialIcons
+					name="keyboard-arrow-right"
+					size={22}
+					color="#e53d41"
+					style={{ marginLeft: 5 }}
+					onPress={() => handleNavLogin()}
+				/>
+			</RowContainer>
+		</Container>
 	);
 };
 
