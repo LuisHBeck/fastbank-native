@@ -55,7 +55,6 @@ export default async function createJwt(
 		});
 
 		setAuthToken(response.data.access);
-
 		return {
 			status: response.status,
 			jwt: response.data.access,
@@ -95,4 +94,24 @@ export async function naturalRegister(
 	} catch (err) {
 		console.log("error on naturalRegister", err);
 	}
+}
+
+export async function getAccount(accountNumber, jwt) {
+  try {
+    const response = await axiosInstance.get(`accounts/${accountNumber}`, {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		})
+		return {
+			user: response.data.user, 
+			agency: response.data.agency, 
+			number: response.data.number, 
+			type: response.data.type, 
+			balance: response.data.balance, 
+			creditLimit: response.data.credit_limit,
+		}
+  } catch(err) {
+    console.log("GETACCOUNT", err)
+  }
 }

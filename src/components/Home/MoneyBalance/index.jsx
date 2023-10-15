@@ -1,13 +1,13 @@
 import { View, Text } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, RowContainer, DefaultText } from "./styled";
 import { useNavigation } from "@react-navigation/native";
-import { useAuth } from "../../../services/api";
+import { useAuth, getAccount } from "../../../services/api";
 
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 const MoneyBalance = () => {
-	const [accountBalance, setAccountBalance] = useState("500.52");
+	const [accountBalance, setAccountBalance] = useState("0.0");
 	const [balanceVisibility, setBalanceVisibility] = useState(false);
 
 	const handleToggleBalanceVisibility = () => {
@@ -22,6 +22,18 @@ const MoneyBalance = () => {
 		logout();
 		navigation.navigate("SigIn");
 	};
+
+	useEffect(() => {
+		const fetchAccountData = async (accountNumber, jwt) => {
+			try {
+				const account = await getAccount(accountNumber, jwt);
+				setAccountBalance(account.balance)
+			} catch (err) {
+				console.error(err);
+			}
+		};
+		fetchAccountData(1111, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk3MzMxMDUyLCJpYXQiOjE2OTczMjc0NTIsImp0aSI6ImUxOTY3Mjc5OWYxMDQ5OGY4OTJhOTA2N2ZhNGFlYjY2IiwidXNlcl9pZCI6MTIzfQ.g2gzuEgr823euJGIWjCiFj6IQQRm8sar8zhWSjW2NOE");
+	}, []);
 
 	return (
 		<Container>
