@@ -7,7 +7,7 @@ import { useAuth, getAccount } from "../../../services/api";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 const MoneyBalance = () => {
-	const [accountBalance, setAccountBalance] = useState("0.0");
+	const [accountBalance, setAccountBalance] = useState("0.00");
 	const [balanceVisibility, setBalanceVisibility] = useState(false);
 
 	const handleToggleBalanceVisibility = () => {
@@ -16,7 +16,7 @@ const MoneyBalance = () => {
 
 	const navigation = useNavigation();
 
-	const { logout } = useAuth();
+	const { logout, jwt } = useAuth();
 
 	const handleNavLogin = () => {
 		logout();
@@ -32,7 +32,7 @@ const MoneyBalance = () => {
 				console.error(err);
 			}
 		};
-		fetchAccountData(1111, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk3MzMxMDUyLCJpYXQiOjE2OTczMjc0NTIsImp0aSI6ImUxOTY3Mjc5OWYxMDQ5OGY4OTJhOTA2N2ZhNGFlYjY2IiwidXNlcl9pZCI6MTIzfQ.g2gzuEgr823euJGIWjCiFj6IQQRm8sar8zhWSjW2NOE");
+		fetchAccountData(1111, jwt);
 	}, []);
 
 	return (

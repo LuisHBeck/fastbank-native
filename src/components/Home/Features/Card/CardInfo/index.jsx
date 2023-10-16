@@ -1,5 +1,5 @@
 import { View, Text } from "react-native"
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Container, ButtonText, Button, InfoContainer, InfoTitle, InfoContent } from "./styled";
 
 const CardInfo = ({totalLimit}) => {
