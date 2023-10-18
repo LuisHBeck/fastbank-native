@@ -3,7 +3,12 @@ import React, { useState, useEffect } from "react";
 import { Container, Title } from "./styled";
 import CardItem from "./CardItem";
 import CardsInfo from "./CardInfo";
-import { useAuth, getAccount, getCards } from "../../../../services/api";
+import {
+	useAuth,
+	getAccount,
+	getCards,
+	getInstallments,
+} from "../../../../services/api";
 
 // const Cards = [
 // 	{
@@ -41,7 +46,9 @@ const width = Dimensions.get("window").width;
 const CardsList = () => {
 	const renderItem = ({ item }) => <CardItem card={item} key={item.id} />;
 
-	const [cardLimit, setCardLimit] = useState("0.00");
+	const [cardLimit, setCardLimit] = useState(0.0);
+	const [currentLimit, setCurrentLimit] = useState(0.0);
+	const [finalInstallment, setFinalInstallment] = useState(0.0);
 	const [cards, setCards] = useState([]);
 
 	const { jwt } = useAuth();
@@ -51,8 +58,15 @@ const CardsList = () => {
 			try {
 				const account = await getAccount(accountNumber, jwt);
 				setCardLimit(account.creditLimit);
-        const cardsData = await getCards(accountNumber, jwt)
-        setCards(cardsData)
+
+				const cardsData = await getCards(accountNumber, jwt);
+				setCards(cardsData);
+
+				const installments = await getInstallments(accountNumber, jwt, true);
+				setFinalInstallment(installments);
+				const limit = parseFloat(cardLimit) - installments;
+				const limitedLimit = parseFloat(limit.toFixed(2));
+				setCurrentLimit(limitedLimit);
 			} catch (err) {
 				console.error(err);
 			}
@@ -76,7 +90,11 @@ const CardsList = () => {
 					(x, i) => i * (width * 0.9 - 40) + (i - 1) * 40
 				)}
 			/>
-			<CardsInfo totalLimit={cardLimit} />
+			<CardsInfo
+				totalLimit={cardLimit}
+				currentLimit={currentLimit}
+				finalInstallment={finalInstallment}
+			/>
 		</Container>
 	);
 };

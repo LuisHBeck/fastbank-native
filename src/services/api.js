@@ -101,44 +101,64 @@ export async function naturalRegister(
 }
 
 export async function getAccount(accountNumber, jwt) {
-  try {
-    const response = await axiosInstance.get(`accounts/${accountNumber}`, {
+	try {
+		const response = await axiosInstance.get(`accounts/${accountNumber}`, {
 			headers: {
 				Authorization: `Bearer ${jwt}`,
 			},
-		})
+		});
 		return {
-			user: response.data.user, 
-			agency: response.data.agency, 
-			number: response.data.number, 
-			type: response.data.type, 
-			balance: response.data.balance, 
+			user: response.data.user,
+			agency: response.data.agency,
+			number: response.data.number,
+			type: response.data.type,
+			balance: response.data.balance,
 			creditLimit: response.data.credit_limit,
-		}
-  } catch(err) {
-    console.log("GETACCOUNT", err)
-  }
+		};
+	} catch (err) {
+		console.log("GETACCOUNT", err);
+	}
 }
 
 export async function getCards(accountNumber, jwt) {
 	try {
-		const response = await axiosInstance.get(`cards/?account=${accountNumber}`, {
-			headers: {
-				Authorization: `Bearer ${jwt}`,
-			},
-		})
+		const response = await axiosInstance.get(
+			`cards/?account=${accountNumber}`,
+			{
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}
+		);
 
 		const cardsData = response.data;
 
-		const mappedCards = cardsData.map(card => ({
+		const mappedCards = cardsData.map((card) => ({
 			id: card.id,
 			number: card.number,
 			expirationDate: card.expiration_date,
 			cvv: card.verification_code,
-			flag: card.flag 
-		}))
+			flag: card.flag,
+		}));
 		return mappedCards;
-	} catch (err){
-		console.log("GETCARDS", err)
+	} catch (err) {
+		console.log("GETCARDS", err);
+	}
+}
+
+export async function getInstallments(accountNumber, jwt, finalAmount) {
+	try {
+		const queryParams = finalAmount ? "&final=true" : "";
+		const response = await axiosInstance.get(
+			`installments/?account=${accountNumber}${queryParams}`,
+			{
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}
+		);
+		return response.data.installment_amount;
+	} catch (err) {
+		console.log("getInstallments", err);
 	}
 }
