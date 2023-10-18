@@ -19,11 +19,6 @@ const Register = () => {
 	const [municipalRegistration, setMunicipalRegistration] = useState("");
 	const [stateRegistration, setStateRegistration] = useState("");
 	const [legalNature, setLegalNature] = useState("");
-
-	const handleInputChange = (value, setStateFunction) => {
-		setStateFunction(value);
-	};
-
 	const [variant, setVariant] = useState("natural");
 
 	const toggleVariant = useCallback(() => {
@@ -65,7 +60,9 @@ const Register = () => {
 							style={{ color: "white" }}
 							placeholder="CPF"
 							keyboardType="number-pad"
-							onChange={(text) => handleInputChange(text, setRegisterNumber)}
+							///////////////////// CHANGES /////////////////////////
+							value={registerNumber}
+							onChange={(value) => setRegisterNumber(value))}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
