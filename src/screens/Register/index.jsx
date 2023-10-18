@@ -60,34 +60,37 @@ const Register = () => {
 							style={{ color: "white" }}
 							placeholder="CPF"
 							keyboardType="number-pad"
-							///////////////////// CHANGES /////////////////////////
 							value={registerNumber}
-							onChange={(value) => setRegisterNumber(value))}
+							onChange={(value) => setRegisterNumber(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="Full Name"
-							onChange={(text) => handleInputChange(text, setName)}
+							value={name}
+							onChange={(value) => setName(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="Birth date"
-							onChange={(text) => handleInputChange(text, setBirthDate)}
+							value={birthDate}
+							onChange={(value) => setBirthDate(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="RG"
 							keyboardType="number-pad"
-							onChange={(text) => handleInputChange(text, setRg)}
+							value={rg}
+							onChange={(value) => setRg(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="Social Name"
-							onChange={(text) => handleInputChange(text, setSocialName)}
+							value={socialName}
+							onChange={(value) => setSocialName(value)}
 						/>
 					</>
 				)}
@@ -97,39 +100,45 @@ const Register = () => {
 							containerStyle={{ width: "85%", marginTop: 70 }}
 							style={{ color: "white" }}
 							placeholder="CNPJ"
-							onChange={(text) => handleInputChange(text, setRegisterNumber)}
+							value={registerNumber}
+							onChange={(value) => setRegisterNumber(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="Fantasy Name"
-							onChange={(text) => handleInputChange(text, setFantasyName)}
+							value={fantasyName}
+							onChange={(value) => setFantasyName(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="Establishment Date"
-							onChange={(text) => handleInputChange(text, setEstablishmentDate)}
+							value={establishmentDate}
+							onChange={(value) => setEstablishmentDate(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="Municipal Registration"
 							keyboardType="number-pad"
-							onChange={(text) => handleInputChange(text, setMunicipalRegistration)}
+							value={municipalRegistration}
+							onChange={(value) => setMunicipalRegistration(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="State Registration"
 							keyboardType="number-pad"
-							onChange={(text) => handleInputChange(text, setStateRegistration)}
+							value={stateRegistration}
+							onChange={(value) => setStateRegistration(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="Legal Nature"
-							onChange={(text) => handleInputChange(text, setLegalNature)}
+							value={legalNature}
+							onChange={(value) => setLegalNature(value)}
 						/>
 					</>
 				)}
@@ -138,7 +147,8 @@ const Register = () => {
 					style={{ color: "white" }}
 					placeholder="Password"
 					secureTextEntry={true}
-					onChange={(text) => handleInputChange(text, setPassword)}
+					value={password}
+					onChange={(value) => setPassword(value)}
 				/>
 				<Button
 					containerStyle={{ width: 180, marginTop: 70 }}
