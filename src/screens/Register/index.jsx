@@ -33,14 +33,18 @@ const Register = () => {
 		navigation.navigate("SigIn");
 	};
 
-	const { jwt, login } = api.useAuth();
+	const { login } = api.useAuth();
 
 	const registration = async () => {
 		const user = await api.createUser(registerNumber, "a", password)
-		if(user === 200) {
-			await api.createJwt(registerNumber, password, login)
+		if(user === 201) {
+			const jwt = await api.createJwt(registerNumber, password, login)
 			if (variant === "natural"){
-				const response = await api.naturalRegister(registerNumber, name, birthDate, rg, socialName, jwt)
+				const response = await api.naturalRegister(registerNumber, name, birthDate, rg, socialName, jwt.jwt)
+				console.log(response)
+			}else {
+				const response = await api.legalRegister(registerNumber, fantasyName, establishmentDate, municipalRegistration, stateRegistration, legalNature, jwt.jwt)
+				console.log(response)
 			}
 		} 
 	}

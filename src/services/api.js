@@ -47,7 +47,7 @@ export async function createUser(registerNumber, picture, password) {
 	}
 }
 
-export default async function createJwt(
+export async function createJwt(
 	registerNumber,
 	password,
 	setAuthToken
@@ -97,6 +97,40 @@ export async function naturalRegister(
 		return response;
 	} catch (err) {
 		console.log("error on naturalRegister", err);
+	}
+}
+
+export async function legalRegister(
+	registerNumber,
+	fantasyName,
+	establishmentDate,
+	municipalRegistration,
+	stateRegistration,
+	legalNature,
+	jwt
+) {
+	try {
+		const response = await axiosInstance.post(
+			"legal-people/",
+			{
+				user: registerNumber,
+				fantasy_name: fantasyName,
+				establishment_date: establishmentDate,
+				cnpj: registerNumber,
+				municipal_registration: municipalRegistration,
+				state_registration: stateRegistration,
+				legal_nature: legalNature
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}
+		);
+		console.log(response);
+		return response;
+	} catch (err) {
+		console.log("error on legalRegister", err);
 	}
 }
 
