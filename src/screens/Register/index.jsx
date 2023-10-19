@@ -41,7 +41,6 @@ const Register = () => {
 			await api.createJwt(registerNumber, password, login)
 			if (variant === "natural"){
 				const response = await api.naturalRegister(registerNumber, name, birthDate, rg, socialName, jwt)
-				console.log(response)
 			}
 		} 
 	}
@@ -61,21 +60,21 @@ const Register = () => {
 							placeholder="CPF"
 							keyboardType="number-pad"
 							value={registerNumber}
-							onChange={(value) => setRegisterNumber(value)}
+							onChangeText={(value) => setRegisterNumber(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="Full Name"
 							value={name}
-							onChange={(value) => setName(value)}
+							onChangeText={(value) => setName(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="Birth date"
 							value={birthDate}
-							onChange={(value) => setBirthDate(value)}
+							onChangeText={(value) => setBirthDate(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
@@ -83,14 +82,14 @@ const Register = () => {
 							placeholder="RG"
 							keyboardType="number-pad"
 							value={rg}
-							onChange={(value) => setRg(value)}
+							onChangeText={(value) => setRg(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="Social Name"
 							value={socialName}
-							onChange={(value) => setSocialName(value)}
+							onChangeText={(value) => setSocialName(value)}
 						/>
 					</>
 				)}
@@ -101,21 +100,21 @@ const Register = () => {
 							style={{ color: "white" }}
 							placeholder="CNPJ"
 							value={registerNumber}
-							onChange={(value) => setRegisterNumber(value)}
+							onChangeText={(value) => setRegisterNumber(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="Fantasy Name"
 							value={fantasyName}
-							onChange={(value) => setFantasyName(value)}
+							onChangeText={(value) => setFantasyName(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="Establishment Date"
 							value={establishmentDate}
-							onChange={(value) => setEstablishmentDate(value)}
+							onChangeText={(value) => setEstablishmentDate(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
@@ -123,7 +122,7 @@ const Register = () => {
 							placeholder="Municipal Registration"
 							keyboardType="number-pad"
 							value={municipalRegistration}
-							onChange={(value) => setMunicipalRegistration(value)}
+							onChangeText={(value) => setMunicipalRegistration(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
@@ -131,14 +130,14 @@ const Register = () => {
 							placeholder="State Registration"
 							keyboardType="number-pad"
 							value={stateRegistration}
-							onChange={(value) => setStateRegistration(value)}
+							onChangeText={(value) => setStateRegistration(value)}
 						/>
 						<Input
 							containerStyle={{ width: "85%" }}
 							style={{ color: "white" }}
 							placeholder="Legal Nature"
 							value={legalNature}
-							onChange={(value) => setLegalNature(value)}
+							onChangeText={(value) => setLegalNature(value)}
 						/>
 					</>
 				)}
@@ -148,7 +147,7 @@ const Register = () => {
 					placeholder="Password"
 					secureTextEntry={true}
 					value={password}
-					onChange={(value) => setPassword(value)}
+					onChangeText={(value) => setPassword(value)}
 				/>
 				<Button
 					containerStyle={{ width: 180, marginTop: 70 }}
