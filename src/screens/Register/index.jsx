@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { Input, Button, Text } from "@rneui/themed";
-import { View, StyleSheet, Image, ScrollView } from "react-native";
+import { View, StyleSheet, Image, ScrollView, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as api from "../../services/api";
 import axios from "axios";
@@ -33,21 +33,42 @@ const Register = () => {
 		navigation.navigate("SigIn");
 	};
 
+	const showAlert = () => {
+		Alert.alert("Successfully register", "Now you can SigIn");
+		navigation.navigate("SigIn");
+		handleNavLogin();
+	}
+
 	const { login } = api.useAuth();
 
 	const registration = async () => {
-		const user = await api.createUser(registerNumber, "a", password)
-		if(user === 201) {
-			const jwt = await api.createJwt(registerNumber, password, login)
-			if (variant === "natural"){
-				const response = await api.naturalRegister(registerNumber, name, birthDate, rg, socialName, jwt.jwt)
-				console.log(response)
-			}else {
-				const response = await api.legalRegister(registerNumber, fantasyName, establishmentDate, municipalRegistration, stateRegistration, legalNature, jwt.jwt)
-				console.log(response)
+		const user = await api.createUser(registerNumber, "a", password);
+		if (user === 201) {
+			const jwt = await api.createJwt(registerNumber, password, login);
+			if (variant === "natural") {
+				const response = await api.naturalRegister(
+					registerNumber,
+					name,
+					birthDate,
+					rg,
+					socialName,
+					jwt.jwt
+				);
+				response.status === 201 ? showAlert() : "";
+			} else {
+				const response = await api.legalRegister(
+					registerNumber,
+					fantasyName,
+					establishmentDate,
+					municipalRegistration,
+					stateRegistration,
+					legalNature,
+					jwt.jwt
+				);
+				response.status === 201 ? showAlert() : "";
 			}
-		} 
-	}
+		}
+	};
 
 	return (
 		<ScrollView style={styles.scrollView}>
@@ -161,7 +182,11 @@ const Register = () => {
 					type="Outline"
 					onPress={() => registration()}
 				/>
-				<Text  onPress={() => toggleVariant()} h4 h4Style={{ color: "white", marginTop: 80 }}>
+				<Text
+					onPress={() => toggleVariant()}
+					h4
+					h4Style={{ color: "white", marginTop: 80 }}
+				>
 					{variant === "natural"
 						? "Legal Registration"
 						: "Natural Registration"}

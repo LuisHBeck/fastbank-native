@@ -2,16 +2,7 @@ import React, { useState } from "react";
 import { Input, Button, Text } from "@rneui/themed";
 import { View, StyleSheet, Image, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import createJwt, { useAuth } from "../../services/api";
-
-const showAlert = () =>
-	Alert.alert("Login failed", "Wrong username or password", [
-		{
-			text: "Ok",
-			onPress: () => {},
-			style: "cancel",
-		},
-	]);
+import { useAuth, createJwt } from "../../services/api";
 
 const SigIn = () => {
 	const [registerNumber, setRegisterNumber] = useState("");
@@ -35,7 +26,8 @@ const SigIn = () => {
 
 	const handleLoginFunction = async () => {
 		const response = await createJwt(registerNumber, password, login);
-		response.status === 200 ? handleNavHome() : showAlert();
+		console.log(response)
+		response === undefined ? Alert.alert('Login failed', "Register number or password wrong") : response.status === 200 ? handleNavHome() : console.log("")
 	};
 
 	return (
