@@ -30,9 +30,10 @@ const SigIn = () => {
 		if (response.status === 200) {
 			const verifyAccount = await api.getAccount(accountNumber, response.jwt)
 			verifyAccount.user.forEach(number => {
-				if (accountNumber === number)
-				setAcc(accountNumber)
-				handleNavHome()
+				if (parseInt(registerNumber) === number) {
+					setAcc(accountNumber)
+					handleNavHome()
+				}
 			})
 		}else if(response === undefined) {
 			Alert.alert('Login failed', "Register number or password wrong")

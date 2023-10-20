@@ -145,7 +145,6 @@ export async function getAccount(accountNumber, jwt) {
 				Authorization: `Bearer ${jwt}`,
 			},
 		});
-		console.log(response.data.user)
 		return {
 			user: response.data.user,
 			agency: response.data.agency,
