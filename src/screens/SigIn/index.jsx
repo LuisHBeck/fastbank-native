@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Input, Button, Text } from "@rneui/themed";
 import { View, StyleSheet, Image, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useAuth, createJwt } from "../../services/api";
+import * as api from "../../services/api";
 
 const SigIn = () => {
 	const [registerNumber, setRegisterNumber] = useState("");
 	const [password, setPassword] = useState("");
+	const [accountNumber, setAccountNumber] = useState(0)
 
 	const handleInputChange = (value, setStateFunction) => {
 		setStateFunction(value);
@@ -22,12 +23,20 @@ const SigIn = () => {
 		navigation.navigate("Home");
 	};
 
-	const { login } = useAuth();
+	const { login, setAcc } = api.useAuth();
 
 	const handleLoginFunction = async () => {
-		const response = await createJwt(registerNumber, password, login);
-		console.log(response)
-		response === undefined ? Alert.alert('Login failed', "Register number or password wrong") : response.status === 200 ? handleNavHome() : console.log("")
+		const response = await api.createJwt(registerNumber, password, login);
+		if (response.status === 200) {
+			const verifyAccount = await api.getAccount(accountNumber, response.jwt)
+			verifyAccount.user.forEach(number => {
+				if (accountNumber === number)
+				setAcc(accountNumber)
+				handleNavHome()
+			})
+		}else if(response === undefined) {
+			Alert.alert('Login failed', "Register number or password wrong")
+		}
 	};
 
 	return (
@@ -38,6 +47,16 @@ const SigIn = () => {
 			/>
 			<Input
 				containerStyle={{ width: "85%", marginTop: 90 }}
+				style={{ color: "white" }}
+				placeholder="ACCOUNT NUMBER"
+				keyboardType="number-pad"
+				onChangeText={(text) => {
+					const number = parseInt(text)
+					handleInputChange(number, setAccountNumber)
+				}}
+			/>
+			<Input
+				containerStyle={{ width: "85%" }}
 				style={{ color: "white" }}
 				placeholder="CPF / CNPJ"
 				keyboardType="number-pad"

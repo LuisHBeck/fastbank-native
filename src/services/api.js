@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 	const [jwt, setJwt] = useState(null);
+	const [account, setAccount] = useState(null);
 
 	const login = (token) => {
 		setJwt(token);
@@ -14,8 +15,12 @@ export const AuthProvider = ({ children }) => {
 		setJwt(null);
 	};
 
+	const setAcc = (accNumber) => {
+		setAccount(accNumber)
+	}
+
 	return (
-		<AuthContext.Provider value={{ jwt, login, logout }}>
+		<AuthContext.Provider value={{ jwt, login, logout, setAcc, account }}>
 			{children}
 		</AuthContext.Provider>
 	);
@@ -127,7 +132,6 @@ export async function legalRegister(
 				},
 			}
 		);
-		console.log(response);
 		return response;
 	} catch (err) {
 		console.log("error on legalRegister", err);
@@ -141,6 +145,7 @@ export async function getAccount(accountNumber, jwt) {
 				Authorization: `Bearer ${jwt}`,
 			},
 		});
+		console.log(response.data.user)
 		return {
 			user: response.data.user,
 			agency: response.data.agency,
