@@ -16,8 +16,8 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const setAcc = (accNumber) => {
-		setAccount(accNumber)
-	}
+		setAccount(accNumber);
+	};
 
 	return (
 		<AuthContext.Provider value={{ jwt, login, logout, setAcc, account }}>
@@ -52,11 +52,7 @@ export async function createUser(registerNumber, picture, password) {
 	}
 }
 
-export async function createJwt(
-	registerNumber,
-	password,
-	setAuthToken
-) {
+export async function createJwt(registerNumber, password, setAuthToken) {
 	try {
 		const response = await axiosInstance.post("auth/jwt/create/", {
 			register_number: registerNumber,
@@ -124,7 +120,7 @@ export async function legalRegister(
 				cnpj: registerNumber,
 				municipal_registration: municipalRegistration,
 				state_registration: stateRegistration,
-				legal_nature: legalNature
+				legal_nature: legalNature,
 			},
 			{
 				headers: {
@@ -198,5 +194,32 @@ export async function getInstallments(accountNumber, jwt, finalAmount) {
 		return response.data.installment_amount;
 	} catch (err) {
 		console.log("getInstallments", err);
+	}
+}
+
+export async function createPix(
+	accountNumber,
+	receiverAccountNumber,
+	amount,
+	jwt
+) {
+	try {
+		const response = await axiosInstance.post(
+			"pix/",
+			{
+				id_account: accountNumber,
+				id_receiver_account: receiverAccountNumber,
+				amount: amount,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}
+		);
+		console.log("function", response.status);
+		return response.status;
+	} catch (error) {
+		console.log("PIXERROR", error);
 	}
 }
