@@ -51,7 +51,7 @@ const CardsList = () => {
 	const [finalInstallment, setFinalInstallment] = useState(0.0);
 	const [cards, setCards] = useState([]);
 
-	const { jwt } = useAuth();
+	const { jwt, account } = useAuth();
 
 	useEffect(() => {
 		const fetchAccountData = async (accountNumber, jwt) => {
@@ -71,7 +71,7 @@ const CardsList = () => {
 				console.error(err);
 			}
 		};
-		fetchAccountData(1111, jwt);
+		fetchAccountData(account, jwt);
 	}, []);
 
 	return (

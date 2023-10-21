@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Container, RowContainer, DefaultText } from "./styled";
 import { useNavigation } from "@react-navigation/native";
-import { useAuth, getAccount } from "../../../services/api";
+import * as api from "../../../services/api"
 
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
@@ -16,7 +16,7 @@ const MoneyBalance = () => {
 
 	const navigation = useNavigation();
 
-	const { logout, jwt } = useAuth();
+	const { logout, jwt, account } = api.useAuth();
 
 	const handleNavLogin = () => {
 		logout();
@@ -26,13 +26,13 @@ const MoneyBalance = () => {
 	useEffect(() => {
 		const fetchAccountData = async (accountNumber, jwt) => {
 			try {
-				const account = await getAccount(accountNumber, jwt);
+				const account = await api.getAccount(accountNumber, jwt);
 				setAccountBalance(account.balance)
 			} catch (err) {
 				console.error(err);
 			}
 		};
-		fetchAccountData(1111, jwt);
+		fetchAccountData(account, jwt);
 	}, []);
 
 	return (
