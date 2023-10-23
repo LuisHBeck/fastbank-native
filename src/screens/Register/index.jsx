@@ -19,7 +19,23 @@ const Register = () => {
 	const [municipalRegistration, setMunicipalRegistration] = useState("");
 	const [stateRegistration, setStateRegistration] = useState("");
 	const [legalNature, setLegalNature] = useState("");
-	const [variant, setVariant] = useState("natural");
+	// const [variant, setVariant] = useState("natural");
+	const [variant, setVariant] = useState("");
+
+	const [finishedFirstSteps, setFinishedFirstSteps] = useState(true);
+
+	const [street, setStreet] = useState("");
+	const [number, setNumber] = useState("");
+	const [neighborhood, setNeighborhood] = useState("");
+	const [city, setCity] = useState("");
+	const [state, setState] = useState("");
+	const [cep, setCep] = useState("");
+
+	const [email, setEmail] = useState("");
+
+	const [areaCode, setAreaCode] = useState("");
+	const [prefixNumber, setPrefixNumber] = useState("");
+	const [phoneNumber, setPhoneNumber] = useState("");
 
 	const toggleVariant = useCallback(() => {
 		setVariant((currentVariant) =>
@@ -37,7 +53,12 @@ const Register = () => {
 		Alert.alert("Successfully register", "Now you can SigIn");
 		navigation.navigate("SigIn");
 		handleNavLogin();
-	}
+	};
+
+	const handleFinishFirstSteps = () => {
+		setVariant("");
+		setFinishedFirstSteps(true);
+	};
 
 	const { login } = api.useAuth();
 
@@ -54,8 +75,9 @@ const Register = () => {
 					socialName,
 					jwt.jwt
 				);
-				response.status === 201 ? showAlert() : "";
-			} else {
+				// response.status === 201 ? showAlert() : "";
+				response.status === 201 ? handleFinishFirstSteps() : false;
+			} else if (variant === "legal") {
 				const response = await api.legalRegister(
 					registerNumber,
 					fantasyName,
@@ -65,8 +87,11 @@ const Register = () => {
 					legalNature,
 					jwt.jwt
 				);
-				response.status === 201 ? showAlert() : "";
+				// response.status === 201 ? showAlert() : "";
+				response.status === 201 ? handleFinishFirstSteps() : false;
 			}
+		}
+		if (finishedFirstSteps) {
 		}
 	};
 
@@ -116,6 +141,14 @@ const Register = () => {
 							value={socialName}
 							onChangeText={(value) => setSocialName(value)}
 						/>
+						<Input
+							containerStyle={{ width: "85%" }}
+							style={{ color: "white" }}
+							placeholder="Password"
+							secureTextEntry={true}
+							value={password}
+							onChangeText={(value) => setPassword(value)}
+						/>
 					</>
 				)}
 				{variant === "legal" && (
@@ -164,16 +197,95 @@ const Register = () => {
 							value={legalNature}
 							onChangeText={(value) => setLegalNature(value)}
 						/>
+						<Input
+							containerStyle={{ width: "85%" }}
+							style={{ color: "white" }}
+							placeholder="Password"
+							secureTextEntry={true}
+							value={password}
+							onChangeText={(value) => setPassword(value)}
+						/>
 					</>
 				)}
-				<Input
-					containerStyle={{ width: "85%" }}
-					style={{ color: "white" }}
-					placeholder="Password"
-					secureTextEntry={true}
-					value={password}
-					onChangeText={(value) => setPassword(value)}
-				/>
+				{finishedFirstSteps && (
+					<>
+						<Input
+							containerStyle={{ width: "85%", marginTop: 70 }}
+							style={{ color: "white" }}
+							placeholder="Street"
+							value={street}
+							onChangeText={(value) => setStreet(value)}
+						/>
+						<Input
+							containerStyle={{ width: "85%"}}
+							style={{ color: "white" }}
+							placeholder="Number"
+							value={number}
+							onChangeText={(value) => setNumber(value)}
+							keyboardType="number-pad"
+						/>
+						<Input
+							containerStyle={{ width: "85%"}}
+							style={{ color: "white" }}
+							placeholder="Neighborhood"
+							value={neighborhood}
+							onChangeText={(value) => setNeighborhood(value)}
+						/>
+						<Input
+							containerStyle={{ width: "85%"}}
+							style={{ color: "white" }}
+							placeholder="City"
+							value={city}
+							onChangeText={(value) => setCity(value)}
+						/>
+						<Input
+							containerStyle={{ width: "85%"}}
+							style={{ color: "white" }}
+							placeholder="State"
+							value={state}
+							onChangeText={(value) => setState(value)}
+						/>
+						<Input
+							containerStyle={{ width: "85%"}}
+							style={{ color: "white" }}
+							placeholder="CEP"
+							value={cep}
+							onChangeText={(value) => setCep(value)}
+							keyboardType="number-pad"
+						/>
+						<Input
+							containerStyle={{ width: "85%"}}
+							style={{ color: "white" }}
+							placeholder="E-mail"
+							value={email}
+							onChangeText={(value) => setEmail(value)}
+						/>
+						<Input
+							containerStyle={{ width: "85%"}}
+							style={{ color: "white" }}
+							placeholder="Area Code"
+							value={areaCode}
+							onChangeText={(value) => setAreaCode(value)}
+							keyboardType="number-pad"
+						/>
+						<Input
+							containerStyle={{ width: "85%"}}
+							style={{ color: "white" }}
+							placeholder="Prefix Number"
+							value={prefixNumber}
+							onChangeText={(value) => setPrefixNumber(value)}
+							keyboardType="number-pad"
+						/>
+						<Input
+							containerStyle={{ width: "85%"}}
+							style={{ color: "white" }}
+							placeholder="Phone Number"
+							value={phoneNumber}
+							onChangeText={(value) => setPhoneNumber(value)}
+							keyboardType="number-pad"
+						/>
+					</>
+				)}
 				<Button
 					containerStyle={{ width: 180, marginTop: 70 }}
 					buttonStyle={{ borderColor: "FFFFFF" }}
@@ -182,6 +294,7 @@ const Register = () => {
 					type="Outline"
 					onPress={() => registration()}
 				/>
+				{!finishedFirstSteps && (
 				<Text
 					onPress={() => toggleVariant()}
 					h4
@@ -190,7 +303,7 @@ const Register = () => {
 					{variant === "natural"
 						? "Legal Registration"
 						: "Natural Registration"}
-				</Text>
+				</Text>)}
 			</View>
 		</ScrollView>
 	);

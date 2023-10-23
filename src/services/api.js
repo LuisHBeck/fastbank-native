@@ -134,6 +134,87 @@ export async function legalRegister(
 	}
 }
 
+export async function addressRegistration(
+	user,
+	street,
+	number,
+	neighborhood,
+	city,
+	state,
+	cep,
+	jwt
+) {
+	try {
+		const response = await axiosInstance.post(
+			"addresses/",
+			{
+				user: user,
+				street: street,
+				number: number,
+				neighborhood: neighborhood,
+				city: city,
+				state: state,
+				cep: cep,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}
+		);
+		return response.status;
+	} catch (err) {
+		console.log("ADDRESS REGISTRATION ERROR", err);
+	}
+}
+
+export async function emailRegistration(user, email, jwt) {
+	try {
+		const response = await axiosInstance.post(
+			"emails/",
+			{
+				user: user,
+				email: email,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}
+		);
+		return response.status;
+	} catch (err) {
+		console.log("EMAIL REGISTRATION ERROR", err);
+	}
+}
+
+export async function phoneRegistration(
+	user,
+	areaCode,
+	prefixNumber,
+	phoneNumber
+) {
+	try {
+		const response = await axiosInstance.post(
+			"phones/",
+			{
+				user: user,
+				areaCode: areaCode,
+				prefixNumber: prefixNumber,
+				phoneNumber: phoneNumber,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}
+		);
+		return response.status;
+	} catch (err) {
+		console.log("PHONE REGISTRATION ERROR", err);
+	}
+}
+
 export async function getAccount(accountNumber, jwt) {
 	try {
 		const response = await axiosInstance.get(`accounts/${accountNumber}`, {
