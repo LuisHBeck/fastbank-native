@@ -192,16 +192,17 @@ export async function phoneRegistration(
 	user,
 	areaCode,
 	prefixNumber,
-	phoneNumber
+	phoneNumber,
+	jwt
 ) {
 	try {
 		const response = await axiosInstance.post(
 			"phones/",
 			{
 				user: user,
-				areaCode: areaCode,
-				prefixNumber: prefixNumber,
-				phoneNumber: phoneNumber,
+				area_code: areaCode,
+				prefix_number: prefixNumber,
+				phone_number: phoneNumber,
 			},
 			{
 				headers: {
