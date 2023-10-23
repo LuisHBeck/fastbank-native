@@ -30,13 +30,13 @@ export const useAuth = () => {
 	return useContext(AuthContext);
 };
 
-export const axiosInstance = axios.create({
-	baseURL: "http://192.168.15.5:8056/api/v1/",
-});
-
 // export const axiosInstance = axios.create({
-// 	baseURL: "http://10.109.71.6:8056/api/v1/",
+// 	baseURL: "http://192.168.15.5:8056/api/v1/",
 // });
+
+export const axiosInstance = axios.create({
+	baseURL: "http://10.109.71.6:8056/api/v1/",
+});
 
 export async function createUser(registerNumber, picture, password) {
 	try {

@@ -7,7 +7,7 @@ import * as api from "../../services/api";
 const SigIn = () => {
 	const [registerNumber, setRegisterNumber] = useState("");
 	const [password, setPassword] = useState("");
-	const [accountNumber, setAccountNumber] = useState(0)
+	const [accountNumber, setAccountNumber] = useState(0);
 
 	const handleInputChange = (value, setStateFunction) => {
 		setStateFunction(value);
@@ -27,16 +27,21 @@ const SigIn = () => {
 
 	const handleLoginFunction = async () => {
 		const response = await api.createJwt(registerNumber, password, login);
-		if (response.status === 200) {
-			const verifyAccount = await api.getAccount(accountNumber, response.jwt)
-			verifyAccount.user.forEach(number => {
-				if (parseInt(registerNumber) === number) {
-					setAcc(accountNumber)
-					handleNavHome()
-				}
-			})
-		}else if(response === undefined) {
-			Alert.alert('Login failed', "Register number or password wrong")
+		try {
+			if (response.status === 200) {
+				const verifyAccount = await api.getAccount(accountNumber, response.jwt);
+				verifyAccount.user.forEach((number) => {
+					if (parseInt(registerNumber) === number) {
+						setAcc(accountNumber);
+						handleNavHome();
+					} else {
+						Alert.alert("Login failed", "Check your data!");
+					}
+				});
+			}
+		} catch(err) {
+			console.log(err)
+			Alert.alert("Login failed", "Check your data!");
 		}
 	};
 
@@ -52,8 +57,8 @@ const SigIn = () => {
 				placeholder="ACCOUNT NUMBER"
 				keyboardType="number-pad"
 				onChangeText={(text) => {
-					const number = parseInt(text)
-					handleInputChange(number, setAccountNumber)
+					const number = parseInt(text);
+					handleInputChange(number, setAccountNumber);
 				}}
 			/>
 			<Input

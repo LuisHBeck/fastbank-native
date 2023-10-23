@@ -18,6 +18,8 @@ const Pix = () => {
   const { account, jwt } = api.useAuth();
 
   const sendPix = async () => {
+		console.log(amount)
+		console.log(typeof(amount))
     const response = await api.createPix(account, receiverAcc, amount, jwt)
     console.log("sendPix",response)
     response === 201 ? Alert.alert("Successfully sent", `R$${amount} to ${account}`) :
@@ -32,7 +34,7 @@ const Pix = () => {
 				<Input
 					placeholder={"R$2500,00"}
 					keyboardType="number-pad"
-					// value={amount}
+					value={amount}
 					onChangeText={(value) => setAmount(parseFloat(value))}
 				/>
 			</Field>
