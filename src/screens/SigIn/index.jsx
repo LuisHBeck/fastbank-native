@@ -88,7 +88,7 @@ const SigIn = () => {
 				h4
 				h4Style={{ color: "white", marginTop: 80 }}
 			>
-				Resgiter
+				Register
 			</Text>
 		</View>
 	);

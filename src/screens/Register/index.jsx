@@ -2,11 +2,14 @@ import React, { useState, useCallback } from "react";
 import { Input, Button, Text } from "@rneui/themed";
 import { View, StyleSheet, Image, ScrollView, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import DropList from "../../components/Register/DropList";
 import * as api from "../../services/api";
 
 const Register = () => {
 	const [registerNumber, setRegisterNumber] = useState("");
 	const [password, setPassword] = useState("");
+
+	const [accType, setAccType] = useState();
 
 	const [name, setName] = useState("");
 	const [birthDate, setBirthDate] = useState("");
@@ -19,7 +22,6 @@ const Register = () => {
 	const [stateRegistration, setStateRegistration] = useState("");
 	const [legalNature, setLegalNature] = useState("");
 	const [variant, setVariant] = useState("natural");
-	// const [variant, setVariant] = useState("");
 
 	const [finishedFirstSteps, setFinishedFirstSteps] = useState(false);
 
@@ -118,10 +120,14 @@ const Register = () => {
 				phoneNumber,
 				jwt
 			);
-			if (addressResponse === 201 && emailResponse === 201 && phoneResponse === 201) {
-				showAlert()
-			}else {
-				Alert.alert("Failed Registration", "Check your data!")
+			if (
+				addressResponse === 201 &&
+				emailResponse === 201 &&
+				phoneResponse === 201
+			) {
+				showAlert();
+			} else {
+				Alert.alert("Failed Registration", "Check your data!");
 			}
 		} catch (err) {
 			console.log(err);
@@ -182,6 +188,7 @@ const Register = () => {
 							value={password}
 							onChangeText={(value) => setPassword(value)}
 						/>
+						<DropList value={accType} onChange={setAccType} />
 					</>
 				)}
 				{variant === "legal" && (
@@ -238,6 +245,7 @@ const Register = () => {
 							value={password}
 							onChangeText={(value) => setPassword(value)}
 						/>
+						<DropList value={accType} onChange={setAccType} />
 					</>
 				)}
 				{finishedFirstSteps && (
@@ -325,7 +333,9 @@ const Register = () => {
 					titleStyle={{ color: "white" }}
 					title="REGISTER"
 					type="Outline"
-					onPress={() => finishedFirstSteps ? additionalInfoRegistration() : registration()}
+					onPress={() =>
+						finishedFirstSteps ? additionalInfoRegistration() : registration()
+					}
 				/>
 				{!finishedFirstSteps && (
 					<Text
