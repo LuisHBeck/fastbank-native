@@ -66,7 +66,7 @@ const MoneyBalance = () => {
 				)}
 			</View>
 			<RowContainer>
-				<DefaultText>See details</DefaultText>
+				<DefaultText>Logout</DefaultText>
 				<MaterialIcons
 					name="keyboard-arrow-right"
 					size={22}
