@@ -216,6 +216,25 @@ export async function phoneRegistration(
 	}
 }
 
+export async function createAccount(type, jwt){
+	try {
+		const response = await axiosInstance.post('accounts/', {
+			type: type
+		},
+		{
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		})
+		return {
+			status: response.status,
+			data: response.data.created
+		}
+	}catch(err) {
+		console.log(err)
+	}
+}
+
 export async function getAccount(accountNumber, jwt) {
 	try {
 		const response = await axiosInstance.get(`accounts/${accountNumber}`, {

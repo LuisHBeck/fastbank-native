@@ -76,7 +76,8 @@ const Register = () => {
 					socialName,
 					token.jwt
 				);
-				// response.status === 201 ? showAlert() : "";
+				const responseAcc = await api.createAccount(accType, token.jwt)
+				responseAcc.status === 201 ? Alert.alert("Account Created", `${responseAcc.data}`) : "";
 				response.status === 201 ? handleFinishFirstSteps() : false;
 			} else if (variant === "legal") {
 				const response = await api.legalRegister(
