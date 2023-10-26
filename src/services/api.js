@@ -315,10 +315,9 @@ export async function createPix(
 			{
 				headers: {
 					Authorization: `Bearer ${jwt}`,
-				},
+				}
 			}
 		);
-		console.log("function", response.status);
 		return response.status;
 	} catch (error) {
 		console.log("PIXERROR", error);
@@ -336,11 +335,30 @@ export async function createLoan(account, amount, installmentAmount, observation
 		{
 			headers: {
 				Authorization: `Bearer ${jwt}`,
-			},
+			}
 		})
 		return {
 			status: response.status,
 			data: response.data.request
+		}
+	}catch(err) {
+		console.log(err)
+	}
+}
+
+export async function createCard(account, jwt){
+	try {
+		const response = await axiosInstance.post("cards/", {
+			id_account: account
+		},
+		{
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			}
+		})
+		return {
+			status: response.status,
+			data: response.data.created
 		}
 	}catch(err) {
 		console.log(err)

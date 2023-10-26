@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
 	Container,
@@ -9,9 +9,23 @@ import {
 	InfoContent,
 } from "./styled";
 
+import * as api from "../../../../../services/api"
+
 const CardInfo = ({ totalLimit, currentLimit, finalInstallment }) => {
+	const { jwt, account } = api.useAuth();
+
+	const requestCard = async () => {
+		const response = await api.createCard(account, jwt)
+		Alert.alert("Requested", `${response.data}`)
+	}	
+
 	return (
 		<>
+			<Container>
+				<Button background={"#d8d8d8"} onPress={requestCard}>
+					<ButtonText>REQUEST CARD</ButtonText>
+				</Button>
+			</Container>
 			<Container>
 				<Button background={"#d8d8d8"}>
 					<ButtonText>PREVIOUS</ButtonText>

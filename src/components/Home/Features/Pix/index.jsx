@@ -12,8 +12,8 @@ import {
 import * as api from "../../../../services/api";
 
 const Pix = () => {
-	const [receiverAcc, setReceiverAcc] = useState("0");
-	const [amount, setAmount] = useState("0.0");
+	const [receiverAcc, setReceiverAcc] = useState(0);
+	const [amount, setAmount] = useState(0.0);
 
   const { account, jwt } = api.useAuth();
 
@@ -31,15 +31,13 @@ const Pix = () => {
 				<Input
 					placeholder={"R$2500,00"}
 					keyboardType="number-pad"
-					value={amount}
 					onChangeText={(value) => setAmount(parseFloat(value))}
 				/>
 			</Field>
 			<Field>
 				<Label>What is the PIX key?</Label>
 				<Input
-					placeholder={"CPF, CNPJ, EMAIL..."}
-					// value={receiverAcc}
+					placeholder={"1111"}
 					onChangeText={(value) => setReceiverAcc(value)}
 				/>
 			</Field>
