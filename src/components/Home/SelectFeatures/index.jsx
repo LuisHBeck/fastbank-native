@@ -2,9 +2,7 @@ import {} from "react-native";
 import React from "react";
 import { Container, FeatureBtn, FeatureBtnTxt } from "./styled";
 
-import CardsList from "../Features/Card";
-
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import FeatherIcon from 'react-native-vector-icons/Feather'
 
 const SelectFeatures = ({ setFeature }) => {
 	return (
@@ -15,7 +13,8 @@ const SelectFeatures = ({ setFeature }) => {
 				}}
 			>
 				<FeatureBtnTxt>
-					<MaterialIcons name="credit-card" size={20} color="#e53d41" />Cards
+					<FeatherIcon name="credit-card" size={20} color="#e53d41" />{" "}
+					Cards
 				</FeatureBtnTxt>
 			</FeatureBtn>
 			<FeatureBtn
@@ -24,8 +23,8 @@ const SelectFeatures = ({ setFeature }) => {
 				}}
 			>
 				<FeatureBtnTxt>
-					<MaterialIcons name="bank-transfer" size={20} color="#e53d41" />{" "}
-					Transfer
+					<FeatherIcon name={'triangle'} size={20} color={'#E52144'} />{" "}
+					Loan
 				</FeatureBtnTxt>
 			</FeatureBtn>
 			<FeatureBtn
@@ -34,7 +33,7 @@ const SelectFeatures = ({ setFeature }) => {
 				}}
 			>
 				<FeatureBtnTxt>
-					<MaterialIcons name="bank-transfer-out" size={20} color="#e53d41" />{" "}
+					<FeatherIcon name={'slack'} size={20} color={'#E52144'} />{" "}
 					Pix
 				</FeatureBtnTxt>
 			</FeatureBtn>

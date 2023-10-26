@@ -4,7 +4,8 @@ import { Container, RowContainer, DefaultText } from "./styled";
 import { useNavigation } from "@react-navigation/native";
 import * as api from "../../../services/api"
 
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import FeatherIcon from 'react-native-vector-icons/Feather'
 
 const MoneyBalance = () => {
 	const [accountBalance, setAccountBalance] = useState("0.00");
@@ -66,9 +67,8 @@ const MoneyBalance = () => {
 				)}
 			</View>
 			<RowContainer>
-				<DefaultText>Logout</DefaultText>
-				<MaterialIcons
-					name="keyboard-arrow-right"
+				<FeatherIcon
+					name="log-out"
 					size={22}
 					color="#e53d41"
 					style={{ marginLeft: 5 }}
