@@ -19,10 +19,23 @@ const CardInfo = ({ totalLimit, currentLimit, finalInstallment }) => {
 		Alert.alert("Requested", `${response.data}`)
 	}	
 
+	const requestAlert = () => {
+		Alert.alert("Request a card", "If you press 'Ok' you will request a credit card", [
+			{
+				text:"Cancel",
+				style:"cancel"
+			},
+			{
+				text:"Ok",
+				onPress: requestCard
+			}
+		])
+	}
+
 	return (
 		<>
 			<Container>
-				<Button background={"#d8d8d8"} onPress={requestCard}>
+				<Button background={"#d8d8d8"} onPress={requestAlert}>
 					<ButtonText>REQUEST CARD</ButtonText>
 				</Button>
 			</Container>
