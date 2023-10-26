@@ -324,3 +324,25 @@ export async function createPix(
 		console.log("PIXERROR", error);
 	}
 }
+
+export async function createLoan(account, amount, installmentAmount, observation, jwt) {
+	try {
+		const response = await axiosInstance.post("loans/", {
+			id_account: account,
+			amount_request: amount,
+			installment_amount: installmentAmount,
+			observation: observation
+		},
+		{
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		})
+		return {
+			status: response.status,
+			data: response.data.request
+		}
+	}catch(err) {
+		console.log(err)
+	}
+}

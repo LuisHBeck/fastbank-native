@@ -18,11 +18,8 @@ const Pix = () => {
   const { account, jwt } = api.useAuth();
 
   const sendPix = async () => {
-		console.log(amount)
-		console.log(typeof(amount))
     const response = await api.createPix(account, receiverAcc, amount, jwt)
-    console.log("sendPix",response)
-    response === 201 ? Alert.alert("Successfully sent", `R$${amount} to ${account}`) :
+    response === 201 ? Alert.alert("Successfully sent", `R$${amount} to ${receiverAcc}`) :
     Alert.alert("Failed to send", "Review the data provided and try again")
   }
 
