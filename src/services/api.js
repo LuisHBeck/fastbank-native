@@ -216,22 +216,25 @@ export async function phoneRegistration(
 	}
 }
 
-export async function createAccount(type, jwt){
+export async function createAccount(type, jwt) {
 	try {
-		const response = await axiosInstance.post('accounts/', {
-			type: type
-		},
-		{
-			headers: {
-				Authorization: `Bearer ${jwt}`,
+		const response = await axiosInstance.post(
+			"accounts/",
+			{
+				type: type,
 			},
-		})
+			{
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}
+		);
 		return {
 			status: response.status,
-			data: response.data.created
-		}
-	}catch(err) {
-		console.log(err)
+			data: response.data.created,
+		};
+	} catch (err) {
+		console.log(err);
 	}
 }
 
@@ -315,7 +318,7 @@ export async function createPix(
 			{
 				headers: {
 					Authorization: `Bearer ${jwt}`,
-				}
+				},
 			}
 		);
 		return response.status;
@@ -324,43 +327,81 @@ export async function createPix(
 	}
 }
 
-export async function createLoan(account, amount, installmentAmount, observation, jwt) {
+export async function createLoan(
+	account,
+	amount,
+	installmentAmount,
+	observation,
+	jwt
+) {
 	try {
-		const response = await axiosInstance.post("loans/", {
-			id_account: account,
-			amount_request: amount,
-			installment_amount: installmentAmount,
-			observation: observation
-		},
-		{
-			headers: {
-				Authorization: `Bearer ${jwt}`,
+		const response = await axiosInstance.post(
+			"loans/",
+			{
+				id_account: account,
+				amount_request: amount,
+				installment_amount: installmentAmount,
+				observation: observation,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
 			}
-		})
+		);
 		return {
 			status: response.status,
-			data: response.data.request
-		}
-	}catch(err) {
-		console.log(err)
+			data: response.data.request,
+		};
+	} catch (err) {
+		console.log(err);
 	}
 }
 
-export async function createCard(account, jwt){
+export async function createCard(account, jwt) {
 	try {
-		const response = await axiosInstance.post("cards/", {
-			id_account: account
-		},
-		{
-			headers: {
-				Authorization: `Bearer ${jwt}`,
+		const response = await axiosInstance.post(
+			"cards/",
+			{
+				id_account: account,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
 			}
-		})
+		);
 		return {
 			status: response.status,
-			data: response.data.created
-		}
-	}catch(err) {
-		console.log(err)
+			data: response.data.created,
+		};
+	} catch (err) {
+		console.log(err);
+	}
+}
+export async function getInvestments(jwt) {
+	try {
+		const response = await axiosInstance.get("investments/", {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		});
+		console.log(response.status)
+		console.log(response.data.contribution)
+		const investmentsData = response.data;
+		const mappedInvestments = investmentsData.map((investment) => ({
+			id: investment.id,
+			type: investment.type,
+			contribution: investment.contribution,
+			adminFee: investment.admin_fee,
+			period: investment.period,
+			riscRate: investment.risc_rate,
+			profitability: investment.profitability,
+			isActive: investment.is_active,
+		}));
+		console.log(investmentsData)
+		return mappedInvestments;
+	} catch (err) {
+		console.log("GETINVESTMENTS ERR", err);
 	}
 }

@@ -4,7 +4,7 @@ import { Container, ButtonContainer, Button, ButtonText } from "./styled";
 
 import { AntDesign, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 
-const Footer = ( ) => {
+const Footer = ({ setFeature }) => {
   return (
     <Container source={require("../../../../assets/footer-bg.png")}>
       <ButtonContainer>
@@ -16,7 +16,9 @@ const Footer = ( ) => {
           <MaterialIcons name="attach-money" size={31} color={"#e53d41"}/>
           <ButtonText>Statement</ButtonText>
         </Button>
-        <Button>
+        <Button onPress={() => {
+          setFeature("Investment")
+        }}>
           <FontAwesome name="bitcoin" size={25} color={"#ffffff"}/>
           <ButtonText>Invest</ButtonText>
         </Button>
