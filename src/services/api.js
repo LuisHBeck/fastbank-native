@@ -379,6 +379,7 @@ export async function createCard(account, jwt) {
 		console.log(err);
 	}
 }
+
 export async function getInvestments(jwt) {
 	try {
 		const response = await axiosInstance.get("investments/", {
@@ -403,5 +404,22 @@ export async function getInvestments(jwt) {
 		return mappedInvestments;
 	} catch (err) {
 		console.log("GETINVESTMENTS ERR", err);
+	}
+}
+
+export async function createAccInvestment(account, investment, jwt) {
+	try {
+		const response = await axiosInstance.post("account-investments/", {
+			id_account: account,
+			id_investment: investment
+		},
+		{
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		})
+		return response.status
+	}catch(err) {
+		console.log("CREATE ACCINVEST error", err)
 	}
 }

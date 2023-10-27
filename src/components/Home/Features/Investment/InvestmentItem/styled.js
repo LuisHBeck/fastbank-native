@@ -43,3 +43,18 @@ export const FieldContent = styled.Text`
   color: white;
   font-weight: bold;
 `;
+
+export const Button = styled.TouchableOpacity`
+  min-width: 120px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.background};
+  border-radius: 5px;
+`;
+
+export const ButtonText = styled.Text`
+  font-size: 12px;
+  font-weight: bold;
+  color: ${(props) => props.color};
+`;
