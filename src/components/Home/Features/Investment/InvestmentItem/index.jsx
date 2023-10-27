@@ -1,7 +1,7 @@
 import { View, Text, Alert } from "react-native";
 import React from "react";
 import {
-	Card,
+	Investment,
 	FlagContainer,
 	FlagImage,
 	FieldContainer,
@@ -35,7 +35,7 @@ const InvestmentItem = ({ investment }) => {
 	}
 
 	return (
-		<Card>
+		<Investment>
 			<FlagContainer>
 				<Button background={"#98E9D4"} onPress={requestAlert}>
 					<ButtonText>Invest</ButtonText>
@@ -56,7 +56,7 @@ const InvestmentItem = ({ investment }) => {
 				</FieldContainer>
 				
 			</ExpirationCvvContainer>
-		</Card>
+		</Investment>
 	);
 };
 export default InvestmentItem;

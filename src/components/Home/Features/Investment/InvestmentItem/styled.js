@@ -3,7 +3,7 @@ import { Dimensions } from "react-native";
 
 const { width } = Dimensions.get("window");
 
-export const Card = styled.View`
+export const Investment = styled.View`
   width: ${width * 0.9 - 30}px;
   min-height: ${width / 2}px;
   margin: 10px 10px;
