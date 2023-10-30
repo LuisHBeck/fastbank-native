@@ -423,3 +423,16 @@ export async function createAccInvestment(account, investment, jwt) {
 		console.log("CREATE ACCINVEST error", err)
 	}
 }
+
+export async function getStatement(account, jwt) {
+	try {
+		const response = await axiosInstance.get(`statements/?account=${account}`, {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		})
+		return response.data
+	}catch(err) {
+		console.log("GETSTATEMENT ERR", err)
+	}
+}

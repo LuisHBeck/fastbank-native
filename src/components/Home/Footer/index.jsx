@@ -12,7 +12,9 @@ const Footer = ({ setFeature }) => {
           <AntDesign name="barcode" size={25} color={"#ffffff"}/>
           <ButtonText>Payment</ButtonText>
         </Button>
-        <Button>
+        <Button onPress={() => {
+          setFeature("Statement")
+        }}>
           <MaterialIcons name="attach-money" size={31} color={"#e53d41"}/>
           <ButtonText>Statement</ButtonText>
         </Button>

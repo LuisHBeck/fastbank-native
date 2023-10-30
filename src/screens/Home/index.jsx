@@ -8,6 +8,7 @@ import Pix from "../../components/Home/Features/Pix";
 import Transfer from "../../components/Home/Features/Transfer";
 import Footer from "../../components/Home/Footer";
 import InvestmentList from "../../components/Home/Features/Investment";
+import Statement from "../../components/Home/Features/Statement";
 
 const Home = () => {
 	const [currentFeature, setCurrentFeature] = useState("Cards");
@@ -29,8 +30,10 @@ const Home = () => {
 				<Transfer />
 			) : currentFeature === "Pix" ? (
 				<Pix />
-			) : (
+			) : currentFeature === "Investment" ? (
 				<InvestmentList />
+			) : (
+				<Statement />
 			)}
 
 		</Container>
