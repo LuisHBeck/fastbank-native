@@ -25,8 +25,22 @@ const SigIn = () => {
 
 	const { login, setAcc } = api.useAuth();
 
+	const handleJwtCreation = async () => {
+		try {
+			const response = await api.createJwt(registerNumber, password, login);
+			return response
+		} catch(error) {
+			if(error.response){
+				if (error.response.status === 429) {
+					Alert.alert("To many requests", "Wait a minute and try again");
+				}
+			}
+		}
+	}
+
 	const handleLoginFunction = async () => {
-		const response = await api.createJwt(registerNumber, password, login);
+		const response = await handleJwtCreation()
+		
 		try {
 			if (response.status === 200) {
 				const verifyAccount = await api.getAccount(accountNumber, response.jwt);

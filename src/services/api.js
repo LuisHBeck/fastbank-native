@@ -66,6 +66,7 @@ export async function createJwt(registerNumber, password, setAuthToken) {
 		};
 	} catch (err) {
 		console.log("error on createJwt", err);
+		throw err
 	}
 }
 
