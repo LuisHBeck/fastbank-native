@@ -30,22 +30,36 @@ export const useAuth = () => {
 	return useContext(AuthContext);
 };
 
-// export const axiosInstance = axios.create({
-// 	baseURL: "http://192.168.15.5:8056/api/v1/",
-// });
-
 export const axiosInstance = axios.create({
-	baseURL: "http://10.109.71.6:8056/api/v1/",
+	baseURL: "http://192.168.15.5:8056/api/v1/",
 });
 
-export async function createUser(registerNumber, picture, password) {
+// export const axiosInstance = axios.create({
+// 	baseURL: "http://10.109.71.6:8056/api/v1/",
+// });
+
+// export async function createUser(registerNumber, picture, password) {
+// 	try {
+// 		const response = await axiosInstance.post("auth/users/", {
+// 			register_number: registerNumber,
+// 			picture: picture,
+// 			password: password,
+// 		});
+// 		console.log(response);
+// 		return response.status;
+// 	} catch (err) {
+// 		console.log("error on createUser", err);
+// 	}
+// }
+
+export async function createUser(formData) {
 	try {
-		const response = await axiosInstance.post("auth/users/", {
-			register_number: registerNumber,
-			picture: picture,
-			password: password,
+		formData.append
+		const response = await axiosInstance.post("auth/users/", formData, {
+			headers: {
+        'Content-Type': 'multipart/form-data',
+      },
 		});
-		console.log(response);
 		return response.status;
 	} catch (err) {
 		console.log("error on createUser", err);

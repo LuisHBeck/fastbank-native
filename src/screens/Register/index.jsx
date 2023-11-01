@@ -1,9 +1,18 @@
 import React, { useState, useCallback } from "react";
 import { Input, Button, Text } from "@rneui/themed";
-import { View, StyleSheet, Image, ScrollView, Alert } from "react-native";
+import {
+	View,
+	StyleSheet,
+	Image,
+	ScrollView,
+	Alert,
+	ToastAndroid,
+	TouchableOpacity,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import DropList from "../../components/Register/DropList";
 import * as api from "../../services/api";
+import * as ImagePicker from "expo-image-picker";
 
 const Register = () => {
 	const [registerNumber, setRegisterNumber] = useState("");
@@ -15,6 +24,8 @@ const Register = () => {
 	const [birthDate, setBirthDate] = useState("");
 	const [rg, setRg] = useState("");
 	const [socialName, setSocialName] = useState("");
+
+	const [imageData, setImageData] = useState();
 
 	const [fantasyName, setFantasyName] = useState("");
 	const [establishmentDate, setEstablishmentDate] = useState("");
@@ -63,8 +74,50 @@ const Register = () => {
 		setFinishedFirstSteps(true);
 	};
 
+	const handlePickerImage = async () => {
+		const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+		if (!granted) {
+			Alert.alert(
+				"Permissão necessária",
+				"Permita que sua aplicação acesse as imagens"
+			);
+		} else {
+			const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
+				allowsEditing: true,
+				mediaTypes: ImagePicker.MediaTypeOptions.Images,
+				base64: false,
+				aspect: [4, 4],
+				quality: 1,
+			});
+
+			if (canceled) {
+				ToastAndroid.show("Operação cancelada", ToastAndroid.SHORT);
+			} else {
+				const filename = assets[0].uri.substring(
+					assets[0].uri.lastIndexOf("/") + 1,
+					assets[0].uri.length
+				);
+				const extend = filename.split(".")[1];
+				const formData = new FormData();
+				formData.append(
+					"picture",
+					JSON.parse(
+						JSON.stringify({
+							name: filename,
+							uri: assets[0].uri,
+							type: "image/" + extend,
+						})
+					)
+				);
+				formData.append("register_number", registerNumber);
+				formData.append("password", password);
+				setImageData(formData);
+			}
+		}
+	};
+
 	const registration = async () => {
-		const user = await api.createUser(registerNumber, "a", password);
+		const user = await api.createUser(imageData);
 		if (user === 201) {
 			const token = await api.createJwt(registerNumber, password, login);
 			if (variant === "natural") {
@@ -334,7 +387,15 @@ const Register = () => {
 					</>
 				)}
 				<Button
-					containerStyle={{ width: 180, marginTop: 70 }}
+					containerStyle={{ width: 180, marginTop: 50 }}
+					buttonStyle={{ borderColor: "FFFFFF" }}
+					titleStyle={{ color: "white" }}
+					title="UPLOAD"
+					type="Outline"
+					onPress={handlePickerImage}
+				/>
+				<Button
+					containerStyle={{ width: 180, marginTop: 30 }}
 					buttonStyle={{ borderColor: "FFFFFF" }}
 					titleStyle={{ color: "white" }}
 					title="REGISTER"
@@ -347,7 +408,7 @@ const Register = () => {
 					<Text
 						onPress={() => toggleVariant()}
 						h4
-						h4Style={{ color: "white", marginTop: 80 }}
+						h4Style={{ color: "#ffffff", marginTop: 50 }}
 					>
 						{variant === "natural"
 							? "Legal Registration"
@@ -375,5 +436,4 @@ const styles = StyleSheet.create({
 		height: 100,
 	},
 });
-
 export default Register;
