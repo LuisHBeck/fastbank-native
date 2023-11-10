@@ -23,7 +23,7 @@ const SigIn = () => {
 		navigation.navigate("Home");
 	};
 
-	const { login, setAcc } = api.useAuth();
+	const { login, setAcc, setRG } = api.useAuth();
 
 	const handleJwtCreation = async () => {
 		try {
@@ -47,6 +47,7 @@ const SigIn = () => {
 				verifyAccount.user.forEach((number) => {
 					if (parseInt(registerNumber) === number) {
 						setAcc(accountNumber);
+						setRG(registerNumber)
 						handleNavHome();
 					} else {
 						Alert.alert("Login failed", "Check your data!");

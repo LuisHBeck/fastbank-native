@@ -6,6 +6,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 	const [jwt, setJwt] = useState(null);
 	const [account, setAccount] = useState(null);
+	const [registerNumber, setRegisterNumber] = useState(null)
 
 	const login = (token) => {
 		setJwt(token);
@@ -19,8 +20,12 @@ export const AuthProvider = ({ children }) => {
 		setAccount(accNumber);
 	};
 
+	const setRG = (number) => {
+		setRegisterNumber(number);
+	}
+
 	return (
-		<AuthContext.Provider value={{ jwt, login, logout, setAcc, account }}>
+		<AuthContext.Provider value={{ jwt, login, logout, setAcc, account, setRG, registerNumber }}>
 			{children}
 		</AuthContext.Provider>
 	);
@@ -30,27 +35,31 @@ export const useAuth = () => {
 	return useContext(AuthContext);
 };
 
-export const axiosInstance = axios.create({
-	baseURL: "http://192.168.15.5:8056/api/v1/",
-});
-
 // export const axiosInstance = axios.create({
-// 	baseURL: "http://10.109.71.6:8056/api/v1/",
+// 	baseURL: "http://192.168.15.5:8056/api/v1/",
 // });
 
-// export async function createUser(registerNumber, picture, password) {
-// 	try {
-// 		const response = await axiosInstance.post("auth/users/", {
-// 			register_number: registerNumber,
-// 			picture: picture,
-// 			password: password,
-// 		});
-// 		console.log(response);
-// 		return response.status;
-// 	} catch (err) {
-// 		console.log("error on createUser", err);
-// 	}
-// }
+export const axiosInstance = axios.create({
+	baseURL: "http://10.109.71.6:8056/api/v1/",
+});
+
+export async function getUser(jwt, registerNumber){
+	try {
+		const response = await axiosInstance.get(`auth/users/${registerNumber}/`, {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		})
+		console.log(response.data)
+		return {
+			status: response.status,
+			photoUrl: response.data.picture
+		}
+	}
+	catch(err) {
+		console.log("GET USER ERROR", err)
+	}
+}
 
 export async function createUser(formData) {
 	try {
